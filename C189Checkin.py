@@ -1,6 +1,11 @@
 import requests, time, re, rsa, json, base64
 from urllib import parse
 
+#填0不开启通知提醒，填1仅开启server酱提醒
+num = '1'
+#server酱
+SCKEY = 'SCU105415Tf3f4eff2c2996089b10875a4a69ee4bc5f0b139e5d8a9'
+
 s = requests.Session()
 
 username = ""
@@ -22,12 +27,17 @@ def main():
         "Host" : "m.cloud.189.cn",
         "Accept-Encoding" : "gzip, deflate",
     }
+    
     response = s.get(surl,headers=headers)
     netdiskBonus = response.json()['netdiskBonus']
     if(response.json()['isSign'] == "false"):
         print(f"未签到，签到获得{netdiskBonus}M空间")
     else:
         print(f"已经签到过了，签到获得{netdiskBonus}M空间")
+    if num != '0':
+        #sent到server酱
+        requests.get('https://sc.ftqq.com/' + SCKEY + '.send?text=' + f"签到获得{netdiskBonus}M空间")
+        
     headers = {
         'User-Agent':'Mozilla/5.0 (Linux; Android 5.1.1; SM-G930K Build/NRD90M; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/74.0.3729.136 Mobile Safari/537.36 Ecloud/8.6.3 Android/22 clientId/355325117317828 clientModel/SM-G930K imsi/460071114317824 clientChannelId/qq proVersion/1.0.6',
         "Referer" : "https://m.cloud.189.cn/zhuanti/2016/sign/index.jsp?albumBackupOpened=1",
@@ -46,7 +56,10 @@ def main():
     else:
         description = response.json()['description']
         print(f"抽奖获得{description}")
-
+    if num != '0':
+        #sent到server酱
+        requests.get('https://sc.ftqq.com/' + SCKEY + '.send?text=' + f"抽奖获得{description}")
+        
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
     return BI_RM[a]
