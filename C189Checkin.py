@@ -50,20 +50,13 @@ def main():
     else:
         description = response.json()['description']
         print(f"抽奖获得{description}")
-       if num != '0':
-        #sent到server酱
-        requests.get('https://sc.ftqq.com/' + SCKEY + '.send?text=' + print(f"抽奖获得{description}")) 
-        
     response = s.get(url2,headers=headers)
     if ("errorCode" in response.text):
         print(response.text)
     else:
         description = response.json()['description']
         print(f"抽奖获得{description}")
-    if num != '0':
-        #sent到server酱
-        requests.get('https://sc.ftqq.com/' + SCKEY + '.send?text=' + print(f"抽奖获得{description}"))
-        
+
 BI_RM = list("0123456789abcdefghijklmnopqrstuvwxyz")
 def int2char(a):
     return BI_RM[a]
